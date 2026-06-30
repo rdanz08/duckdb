@@ -24,7 +24,7 @@ jobs:
         # destinations need to match selected version of Xcode
         # https://github.com/actions/runner-images/blob/main/images/macos/macos-14-Readme.md#installed-simulators
         destination:
-          - 'macOS'
+          - 'blacksmith-6vcpu-macos-15'
           - 'iOS Simulator,name=iPhone 16'
           - 'tvOS Simulator,name=Apple TV 4K (at 1080p) (3nd generation)'
         isRelease:

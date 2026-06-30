@@ -31,7 +31,7 @@ jobs:
   check-draft:
     # We run all other jobs on PRs only if they are not draft PR
     if: github.event_name != 'pull_request' || github.event.pull_request.draft == false
-    runs-on: ubuntu-24.04
+    runs-on: blacksmith-4vcpu-ubuntu-2404
     steps:
       - name: Preliminary checks on CI
         run: echo "Event name is ${{ github.event_name }}"
@@ -40,7 +40,7 @@ jobs:
     name: Analyze (${{ matrix.language }})
     needs: check-draft
     if: github.event_name == 'workflow_dispatch' || github.event_name == 'repository_dispatch'
-    runs-on: ubuntu-latest
+    runs-on: blacksmith-4vcpu-ubuntu-2404
     permissions:
       actions: read
       contents: read
@@ -78,7 +78,7 @@ jobs:
   linux-memory-leaks:
      name: Linux Memory Leaks
      needs: check-draft
-     runs-on: ubuntu-24.04
+     runs-on: blacksmith-4vcpu-ubuntu-2404
      env:
        GEN: ninja
 
@@ -111,7 +111,7 @@ jobs:
 
   release-assert:
     name: Release Assertions
-    runs-on: ubuntu-latest
+    runs-on: blacksmith-4vcpu-ubuntu-2404
     needs: linux-memory-leaks
     env:
       GEN: ninja
@@ -156,7 +156,7 @@ jobs:
 
   release-assert-osx-storage:
     name: Release Assertions OSX Storage
-    runs-on: macos-latest
+    runs-on: blacksmith-6vcpu-macos-15
     needs: linux-memory-leaks
     env:
       GEN: ninja
@@ -194,7 +194,7 @@ jobs:
 
   smaller-binary:
     name: Smaller Binary
-    runs-on: ubuntu-24.04
+    runs-on: blacksmith-4vcpu-ubuntu-2404
     needs: linux-memory-leaks
     env:
       GEN: ninja
@@ -229,7 +229,7 @@ jobs:
 
   release-assert-clang:
     name: Release Assertions with Clang
-    runs-on: ubuntu-latest
+    runs-on: blacksmith-4vcpu-ubuntu-2404
     needs: linux-memory-leaks
     env:
       CC: clang
@@ -276,7 +276,7 @@ jobs:
 
   valgrind:
     name: Valgrind
-    runs-on: ubuntu-24.04
+    runs-on: blacksmith-4vcpu-ubuntu-2404
     needs: linux-memory-leaks
     env:
       CC: clang-20
@@ -318,7 +318,7 @@ jobs:
 
   sqllogic:
      name: Sqllogic tests
-     runs-on: ubuntu-latest # Secondary task of this CI job is to test building duckdb on latest ubuntu
+     runs-on: blacksmith-4vcpu-ubuntu-2404 # Secondary task of this CI job is to test building duckdb on latest ubuntu
      needs: linux-memory-leaks
 
      steps:
@@ -347,7 +347,7 @@ jobs:
 
   storage-initialization:
      name: Storage Initialization Verification
-     runs-on: ubuntu-24.04
+     runs-on: blacksmith-4vcpu-ubuntu-2404
      needs: linux-memory-leaks
      env:
        CC: gcc
@@ -379,7 +379,7 @@ jobs:
 
   extension-updating:
     name: Extension updating test
-    runs-on: ubuntu-24.04
+    runs-on: blacksmith-4vcpu-ubuntu-2404
     needs: linux-memory-leaks
     env:
       CC: gcc
@@ -437,7 +437,7 @@ jobs:
 
   regression-test-memory-safety:
    name: Regression Tests between safe and unsafe builds
-   runs-on: ubuntu-24.04
+   runs-on: blacksmith-4vcpu-ubuntu-2404
    needs: linux-memory-leaks
    env:
      CC: gcc
@@ -517,7 +517,7 @@ jobs:
 
   vector-and-block-sizes:
     name: Tests non-default vector and block size
-    runs-on: ubuntu-24.04
+    runs-on: blacksmith-4vcpu-ubuntu-2404
     env:
       LSAN_OPTIONS: suppressions=${{ github.workspace }}/.sanitizer-leak-suppressions.txt
     needs: linux-memory-leaks
@@ -560,7 +560,7 @@ jobs:
 
   force-blocking-sink-source:
     name: Forcing async Sinks/Sources
-    runs-on: ubuntu-24.04
+    runs-on: blacksmith-4vcpu-ubuntu-2404
     needs: check-draft
     env:
       GEN: ninja
@@ -596,7 +596,7 @@ jobs:
     # disable in NightlyTests
     if: ${{ vars.ENABLE_WASM_EXPERIMENTAL == 'true' }}
     needs: check-draft
-    runs-on: ubuntu-22.04
+    runs-on: blacksmith-4vcpu-ubuntu-2204
     steps:
     - uses: emscripten-core/setup-emsdk@v16
       with:
@@ -673,7 +673,7 @@ jobs:
 
   hash-zero:
    name: Hash Zero
-   runs-on: ubuntu-24.04
+   runs-on: blacksmith-4vcpu-ubuntu-2404
    needs: linux-memory-leaks
    env:
      GEN: ninja
@@ -711,7 +711,7 @@ jobs:
 
   bwc-build:
     name: Build DuckDB
-    runs-on: ubuntu-latest
+    runs-on: blacksmith-4vcpu-ubuntu-2404
     outputs:
       groups: ${{ steps.resolve.outputs.groups }}
     steps:
@@ -746,7 +746,7 @@ jobs:
 
   bwc-test:
     name: BWC Test (DuckDB ${{ matrix.series.group }})
-    runs-on: ubuntu-latest
+    runs-on: blacksmith-4vcpu-ubuntu-2404
     needs: bwc-build
     strategy:
       fail-fast: false
@@ -837,7 +837,7 @@ jobs:
 
   summary:
     name: BWC Test Summary
-    runs-on: ubuntu-24.04
+    runs-on: blacksmith-4vcpu-ubuntu-2404
     needs: bwc-test
     if: always()
     steps:
@@ -882,7 +882,7 @@ jobs:
     needs: check-draft
     strategy:
       matrix:
-        os: [ubuntu-latest, macos-latest]
+        os: [blacksmith-4vcpu-ubuntu-2404, macos-latest]
 
     steps:
       - uses: actions/checkout@v6

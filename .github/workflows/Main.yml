@@ -825,7 +825,7 @@ jobs:
     needs:
       - prepare
       - linux-release-cli
-    runs-on: ubuntu-latest
+    runs-on: blacksmith-4vcpu-ubuntu-2404
     strategy:
       fail-fast: false
       matrix:
@@ -1003,9 +1003,9 @@ jobs:
         include:
           - xcode_target_flag: "x86_64"
             architecture: "amd64"
-          - xcode_target_flag: "arm64"
-            architecture: "arm64"
-    runs-on: ${{ needs.prepare.outputs.runner_macos_14_arm64 }}
+          - xcode_target_flag: "blacksmith-4vcpu-ubuntu-2404-arm"
+            architecture: "blacksmith-4vcpu-ubuntu-2404-arm"
+    runs-on: ${{ blacksmith-4vcpu-ubuntu-2404-arm }}
     env:
       EXTENSION_CONFIGS: '${GITHUB_WORKSPACE}/.github/config/bundled_extensions.cmake'
       ENABLE_EXTENSION_AUTOLOADING: 1
@@ -1342,7 +1342,7 @@ jobs:
  summary:
     name: Summary
     if: ${{ always() }}
-    runs-on: ubuntu-slim
+    runs-on: blacksmith-4vcpu-ubuntu-2404
     needs:
       - prepare
       - linux-relassert
