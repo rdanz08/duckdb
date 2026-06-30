@@ -11,7 +11,7 @@ on:
 
 jobs:
  staged-upload:
-   runs-on: ubuntu-latest
+   runs-on: blacksmith-4vcpu-ubuntu-2404
    if: ${{ inputs.target_git_describe != '' }}
    steps:
      - uses: actions/checkout@v6

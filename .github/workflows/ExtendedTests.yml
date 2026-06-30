@@ -24,7 +24,7 @@ env:
 jobs:
   linux-configs-all:
     name: Run all tests with different configurations
-    runs-on: ubuntu-24.04
+    runs-on: blacksmith-4vcpu-ubuntu-2404
     strategy:
       fail-fast: false
       matrix:
@@ -61,7 +61,7 @@ jobs:
 
   regression-lto-benchmark-runner:
      name: Benchmark runner lto vs non-lto (OSX)
-     runs-on: macos-latest
+     runs-on: blacksmith-6vcpu-macos-15
      env:
        CC: clang
        CXX: clang++
@@ -139,7 +139,7 @@ jobs:
 
   regression-clang16-vs-clang14-benchmark-runner:
      name: Benchmark runner clang-16 vs clang-14 (OSX)
-     runs-on: macos-latest
+     runs-on: blacksmith-6vcpu-macos-15
      env:
        CC: clang
        CXX: clang++
@@ -216,7 +216,7 @@ jobs:
 
   regression-clang-benchmark-runner:
      name: Benchmark runner clang vs gcc
-     runs-on: ubuntu-latest
+     runs-on: blacksmith-4vcpu-ubuntu-2404
      env:
        CC: gcc
        CXX: g++
@@ -299,7 +299,7 @@ jobs:
 
   regression-flto-gcc-benchmark-runner:
      name: Benchmark runner gcc flto vs gcc
-     runs-on: ubuntu-latest
+     runs-on: blacksmith-4vcpu-ubuntu-2404
      env:
        CC: gcc
        CXX: g++

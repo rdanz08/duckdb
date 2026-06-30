@@ -43,7 +43,7 @@ env:
 jobs:
  linux-x64-docker:
     name: Docker tests on Linux (x64)
-    runs-on: ubuntu-latest
+    runs-on: blacksmith-4vcpu-ubuntu-2404
 
     steps:
     - uses: actions/checkout@v6
